@@ -6,7 +6,7 @@ import com.sort.study.lihan.tree.BiTreeNode;
 public class TestBiSearchTree {
     public static void main(String[] args) {
         BiSearchTreeNode node = generate();
-        BiSearchTreeNode insert = insertNot(node, 39);
+        BiSearchTreeNode insert = query(node,11);
         System.out.println(insert);
 
     }
@@ -91,6 +91,17 @@ public class TestBiSearchTree {
             beforeNode.setLchld(newNode);
         }
         return  tmpRoot;
+    }
+
+    public static BiSearchTreeNode query(BiSearchTreeNode root, int val){
+        if( root == null || root.getData() ==val){
+            return root;
+        }
+        if(val < root.getData()){
+           return query(root.getLchld(),val);
+        }else{
+            return query(root.getRchld(),val);
+        }
     }
 
 }
