@@ -3,11 +3,15 @@ package com.sort.study.lihan;
 import com.sort.study.lihan.tree.BiSearchTreeNode;
 import com.sort.study.lihan.tree.BiTreeNode;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestBiSearchTree {
     public static void main(String[] args) {
         BiSearchTreeNode node = generate();
-        BiSearchTreeNode insert = query(node,11);
+        BiSearchTreeNode insert = delete(node,35);
         System.out.println(insert);
+
 
     }
 
@@ -102,6 +106,161 @@ public class TestBiSearchTree {
         }else{
             return query(root.getRchld(),val);
         }
+    }
+
+    public static BiSearchTreeNode delete(BiSearchTreeNode root, int val) {
+        BiSearchTreeNode pNode = root;
+        BiSearchTreeNode curNode = root;
+        BiSearchTreeNode targetNode = null;
+        int curVal = curNode.getData();
+
+//找出要删除的节点和父节点
+        while (true) {
+            if (curNode == null) {
+                return root;
+            }
+            curVal = curNode.getData();
+            if (val < curNode.getData()) {
+                pNode = curNode;
+                curNode = curNode.getLchld();
+                continue;
+            }
+            if (val > curNode.getData()) {
+                pNode = curNode;
+                curNode = curNode.getRchld();
+                continue;
+            }
+            if (val == curNode.getData()) {
+                targetNode = curNode;
+                break;
+            }
+
+        }
+        //要删除的节点有两个子节点
+        if( targetNode.getLchld()!=null && targetNode.getRchld()!= null){
+            List<BiSearchTreeNode> minRightNode = getMinRightNode(targetNode);
+            int data = minRightNode.get(1).getData();
+            targetNode.setData(data);
+            pNode = minRightNode.get(0);
+            targetNode = minRightNode.get(1);
+            root = doDeleteNode(root,pNode,targetNode);
+            return root;
+        }
+        root = doDeleteNode(root,pNode,targetNode);
+        return root;
+
+    }
+//第一位是父节点，第二位是要删除的节点
+    public static List<BiSearchTreeNode> getMinRightNode(BiSearchTreeNode root){
+        List<BiSearchTreeNode> result = new ArrayList<>();
+        result.add(root);
+        while (root.getLchld() != null){
+            result.set(0,root);
+            root = root.getLchld();
+        }
+        result.add(root);
+        return  result;
+    }
+
+/**
+ * @Description 删除节点的方法
+ * @Author lihan
+ * @Date 2021/12/8
+ * @Param
+ * @param pNode
+ * @param targetNode
+ * @return com.sort.study.lihan.tree.BiSearchTreeNode
+ **/
+    public static BiSearchTreeNode doDeleteNode(BiSearchTreeNode root,BiSearchTreeNode pNode, BiSearchTreeNode targetNode){
+
+        //targetNode有左子节点
+        if(targetNode.getLchld()!=null){
+            root = leftChildDelete(root,pNode,targetNode);
+            return root;
+        }
+        //targetNode有右子节点
+        if(targetNode.getRchld()!= null){
+
+            root = rightChildDelete(root, pNode, targetNode);
+            return root;
+        }
+        //targetNode没有字节点
+        root = noChildDelete(root,pNode,targetNode);
+        //targetNode只有一个子节点或者没有子节点
+        return root;
+    }
+
+
+/**
+ * @Description targetNode没有子节点，直接删除
+ * @Author lihan
+ * @Date 2021/12/8
+ * @Param root 根节点
+ * @param pNode targetNode的父节点
+ * @param targetNode 要删除的节点
+ * @return com.sort.study.lihan.tree.BiSearchTreeNode
+ **/
+    public static BiSearchTreeNode noChildDelete(BiSearchTreeNode root,BiSearchTreeNode pNode, BiSearchTreeNode targetNode){
+        if(root == targetNode){
+            root = null;
+            return root;
+        }
+        if ( pNode.getLchld() == targetNode){
+            pNode.setLchld(null);
+        }else{
+            pNode.setRchld(null);
+        }
+        return root;
+
+    }
+    /**
+     * @Description targetNode只有一个左节点节点
+     * @Author lihan
+     * @Date 2021/12/8
+     * @Param
+     * @param pNode
+     * @param targetNode
+     * @return com.sort.study.lihan.tree.BiSearchTreeNode
+     **/
+
+    public static BiSearchTreeNode leftChildDelete(BiSearchTreeNode root,BiSearchTreeNode pNode, BiSearchTreeNode targetNode){
+        BiSearchTreeNode cNode4Target =  targetNode.getLchld();
+        targetNode.setLchld(null);
+       if(root == targetNode){
+           root = cNode4Target;
+           return root;
+       }
+        if(pNode.getRchld() == targetNode){
+           pNode.setRchld(cNode4Target);
+           return root;
+       }
+       pNode.setLchld(cNode4Target);
+        return root;
+    }
+
+/**
+ * @Description targetNode只有一个右子节点
+ * @Author lihan 
+ * @Date 2021/12/8
+ * @Param 
+ * @param pNode
+ * @param targetNode
+ * @return com.sort.study.lihan.tree.BiSearchTreeNode
+ **/
+
+    public static BiSearchTreeNode rightChildDelete(BiSearchTreeNode root,BiSearchTreeNode pNode, BiSearchTreeNode targetNode){
+        BiSearchTreeNode cNode4Target = targetNode.getRchld();
+        targetNode.setRchld(null);
+        if(root == targetNode){
+            root = cNode4Target;
+            return root;
+        }
+        if(pNode.getLchld() ==targetNode){
+            pNode.setLchld(cNode4Target);
+            return root;
+        }
+        pNode.setRchld(cNode4Target);
+        return root;
     }
 
 }
