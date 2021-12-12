@@ -5,7 +5,11 @@ package com.sort.study.lihan;
 *
 * */
 
+import lombok.val;
+
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.zip.ZipEntry;
 
 public class Sort {
     /**
@@ -167,9 +171,11 @@ public class Sort {
 
     public static void quickSort(int[]arr, int start, int end){
         if (start < end){
-            int mid = partiton(arr, start,end);
+            int mid = divide4Quick(arr,start,end);
+           // int mid = partiton(arr,start,end);
             quickSort(arr,start,mid-1);
             quickSort(arr,mid+1, end);
+
         }
     }
     public static int partiton(int[] arr,int start, int end){
@@ -192,39 +198,84 @@ public class Sort {
         return start;
     }
 @Deprecated
-    public static void divide4Quick(int[] arr, int start, int end){
+
+    public static int divide4Quick(int[] arr, int start, int end){
         int val = arr[start];
         int insertIndex = start;
         int frontIndex = start+1;
         int lastIndex = end;
         //如确定空位置在哪一端
-        while (frontIndex < lastIndex){
+        while (frontIndex <= lastIndex){
             //后面往前插入
           if(insertIndex < frontIndex){
               while (arr[lastIndex]>= val && lastIndex >= frontIndex)lastIndex--;
-              if(arr[lastIndex] < val){
+              if(lastIndex >= frontIndex){
                   arr[insertIndex] = arr[lastIndex];
                   insertIndex = lastIndex;
-                  continue;
+                  lastIndex--;
               }
-          }
+         }
           //从前往后插入
             while (arr[frontIndex]<=val && frontIndex <= lastIndex) frontIndex++;
-          if(arr[frontIndex] > val){
+          if(lastIndex >= frontIndex){
               arr[insertIndex] = arr[frontIndex];
               insertIndex = frontIndex;
+              frontIndex++;
           }
         }
-        //确定第一个数插入的位置,特殊情况：刚开始的时候，全部比它大或者全部比它小，怎么算
-        //
-        if(insertIndex != start){
-            arr[insertIndex] = val;
-        }else{
-            if(arr[start+1]>= val){
+     arr[insertIndex] = val;
+        return insertIndex;
 
+    }
+
+    /**
+     * @Description 向下调整函数
+     * @Author lihan
+     * @Date 2021/12/12
+     * @Param li 列表
+     * @param low 堆的堆顶位置
+     * @param high 堆的最后一个元素的位置
+     * @return int
+     **/
+    public  static void sift(int[] li,int low, int high){
+        int leftChildIndex = 2*low+1;
+        int val = li[low];
+        int i= low;
+        int j = leftChildIndex;//最大子节点的索引值
+
+        //没有下层字节点了
+        while (j<=high){
+            //确定最大值在左子树还是右子树；右孩子没有越界
+            if(j+1<= high && li[j+1] > li[j]){
+                j++;
             }
-        }
 
+           if(li[j] <= val){
+               break;
+            }
+            li[i] =li[j];
+            i = j;
+            j = 2*i+1;//往下看一层
+
+        }
+        li[i] = val; //结束循环的条件是，没有下一个要比较的元素了，或者放到了某一层的领导位置
+
+    }
+
+    public static void heapSort(int[] arr){
+        int len = arr.length-1;
+        int curIndex = (len -1)/2;//有叶子节点的最后一个节点的下标
+        //建堆完成,此时堆顶为最大元素
+        for (int i = curIndex; i >=0 ; i--) {
+            sift(arr,i, len);
+        }
+        for (int i = len; i >=0 ; i--) {
+            //堆顶和最后一个元素交换
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+            sift(arr,0,i-1);
+        }
 
 
     }

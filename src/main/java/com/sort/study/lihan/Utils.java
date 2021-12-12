@@ -20,13 +20,11 @@ public class Utils {
         return result;
     }
 
-    public static  boolean isArrOrdered(int[] arr){
+    public static  boolean isArrOrdered(int[] arr,int[] origArr){
         int len = arr.length;
-        int[] tempArr ;
-        tempArr = Arrays.copyOf(arr,len);
-         Arrays.sort(arr);
+         Arrays.sort(origArr);
         for (int i = 0; i < len; i++) {
-            if( tempArr[i] != arr[i]){
+            if( origArr[i] != arr[i]){
                 return  false;
             }
         }
