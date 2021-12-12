@@ -159,4 +159,74 @@ public class Sort {
         System.out.println("==============");
     }
 
+    //快速排序
+    public static void quickSort(int[] arr){
+        int len = arr.length;
+        quickSort(arr,0, len-1);
+    }
+
+    public static void quickSort(int[]arr, int start, int end){
+        if (start < end){
+            int mid = partiton(arr, start,end);
+            quickSort(arr,start,mid-1);
+            quickSort(arr,mid+1, end);
+        }
+    }
+    public static int partiton(int[] arr,int start, int end){
+        int val = arr[start];
+        while (start < end){
+            /***
+             *因为插入的顺序是固定的，先从后面找到一个比val小的值，再从前面找到一个比val大的值
+             * 所以不需要判断
+             *
+             **/
+            //找小的
+            while (start< end && arr[end] >= val) end--;
+                arr[start] = arr[end];
+            //找大的
+            while (start < end && arr[start] <= val) start++;
+                arr[end] = arr[start];
+        }
+        arr[start] = val;
+
+        return start;
+    }
+@Deprecated
+    public static void divide4Quick(int[] arr, int start, int end){
+        int val = arr[start];
+        int insertIndex = start;
+        int frontIndex = start+1;
+        int lastIndex = end;
+        //如确定空位置在哪一端
+        while (frontIndex < lastIndex){
+            //后面往前插入
+          if(insertIndex < frontIndex){
+              while (arr[lastIndex]>= val && lastIndex >= frontIndex)lastIndex--;
+              if(arr[lastIndex] < val){
+                  arr[insertIndex] = arr[lastIndex];
+                  insertIndex = lastIndex;
+                  continue;
+              }
+          }
+          //从前往后插入
+            while (arr[frontIndex]<=val && frontIndex <= lastIndex) frontIndex++;
+          if(arr[frontIndex] > val){
+              arr[insertIndex] = arr[frontIndex];
+              insertIndex = frontIndex;
+          }
+        }
+        //确定第一个数插入的位置,特殊情况：刚开始的时候，全部比它大或者全部比它小，怎么算
+        //
+        if(insertIndex != start){
+            arr[insertIndex] = val;
+        }else{
+            if(arr[start+1]>= val){
+
+            }
+        }
+
+
+
+    }
+
 }
