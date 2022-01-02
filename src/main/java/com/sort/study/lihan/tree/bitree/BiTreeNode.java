@@ -1,4 +1,4 @@
-package com.sort.study.lihan.tree;
+package com.sort.study.lihan.tree.bitree;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
