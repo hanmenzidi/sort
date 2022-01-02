@@ -1,7 +1,4 @@
-package com.sort.study.lihan;
-
-import com.sort.study.lihan.tree.BiSearchTreeNode;
-import com.sort.study.lihan.tree.BiTreeNode;
+package com.sort.study.lihan.tree;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.sort.study.lihan.tree;
 
-import java.util.Stack;
+import com.sort.study.lihan.tree.bitree.BiTreeNode;
 
 public class TestBiTreeNode {
     public static void main(String[] args) {
@@ -30,7 +30,8 @@ public class TestBiTreeNode {
 
      // in_order(e);
       // pre_order(e);
-        post_order(e);
+      //  post_order(e);
+        post_order2(e);
 
 
 
@@ -74,6 +75,15 @@ public class TestBiTreeNode {
 
     }
 
+
+public static  void post_order2(BiTreeNode root){
+        if(root != null){
+            post_order(root.getLchld());
+            post_order2(root.getRchld());
+            System.out.println(root.getData());
+        }
+
+}
 
 
 }

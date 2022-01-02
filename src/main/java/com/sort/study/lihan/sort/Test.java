@@ -1,4 +1,6 @@
-package com.sort.study.lihan;
+package com.sort.study.lihan.sort;
+
+import com.sort.study.lihan.utils.Utils;
 
 import java.util.Arrays;
 

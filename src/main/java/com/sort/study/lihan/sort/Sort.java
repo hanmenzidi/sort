@@ -1,4 +1,4 @@
-package com.sort.study.lihan;
+package com.sort.study.lihan.sort;
 /*
 * @author lihan
 * @date 2021/12/4
@@ -7,7 +7,9 @@ package com.sort.study.lihan;
 
 import lombok.val;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.ZipEntry;
 
@@ -280,4 +282,25 @@ public class Sort {
 
     }
 
+    /**
+     * @Description
+     * @Author lihan
+     * @Date 2021/12/14
+     * @Param
+     * @param n 分成多少个桶
+     * @param max 数组中元素的范围
+     * @return void
+     **/
+    public static  void bucketSort(int[] arr,int n,int max){
+        List<ArrayList<Integer>> buckets = new ArrayList<>();
+        int len = arr.length;
+        for (int i = 0; i <len ; i++) {
+            int val = arr[i];
+            int bucketIndex = Math.min(n-1,val/n);
+            ArrayList<Integer> bucket = buckets.get(bucketIndex);
+            if(bucket == null){
+
+            }
+        }
+    }
 }
