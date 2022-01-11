@@ -14,23 +14,24 @@ import java.util.*;
 public class TestTraverse {
     public static void main(String[] args) {
         BiTreeNode node = Utils.generateBiTreeNode();
-      /*  System.out.println("先序遍历");
+      /* System.out.println("先序遍历");
         pre(node);
         System.out.println( );
        noRecursionPre(node);*/
-       /* System.out.println("中序遍历");
+      /*  System.out.println("中序遍历");
         in(node);
         System.out.println();
         noRecursionIn(node);*/
 
-   /*  System.out.println("后序遍历");
+    System.out.println("后序遍历");
         post(node);
         System.out.println( );
-        noRecursionPost2(node);*/
+        noRecursionPost3(node);
+
        /* System.out.println("层次遍历");
         cell(node);*/
-       int result = maxWidth2(node);
-        System.out.println("最大宽度："+ result);
+      /* int result = maxWidth2(node);
+        System.out.println("最大宽度："+ result);*/
     }
 
     public static void pre(BiTreeNode root){
@@ -42,6 +43,7 @@ public class TestTraverse {
         pre(root.getRchld());
 
     }
+
 
     public  static  void noRecursionPre(BiTreeNode root){
         if(root == null){
@@ -89,6 +91,26 @@ public class TestTraverse {
        }
     }
 
+    public static void noRecursionIn2(BiTreeNode root){
+        if (root == null){
+            return;
+        }
+        Stack<BiTreeNode> stack = new Stack<>();
+        stack.push(root);
+        BiTreeNode curNode;
+        while (!stack.isEmpty()){
+            curNode = stack.peek();
+            if (curNode.getLchld()!= null){
+                stack.push(curNode);
+                continue;
+            }
+            System.out.print(curNode.getData()+',');
+            if (curNode.getRchld() != null){
+                stack.push(curNode.getRchld());
+            }
+            stack.pop();
+        }
+    }
     public static void post (BiTreeNode root){
         if(root == null){
             return;
@@ -129,6 +151,37 @@ public class TestTraverse {
 
     }
 
+    public  static  void noRecursionPost3(BiTreeNode root){
+        if (root == null){
+            return;
+        }
+        Stack<BiTreeNode> stack = new Stack<>();
+        stack.push(root);
+        BiTreeNode curNode = root;
+        BiTreeNode lastPrintNode = null;
+        BiTreeNode leftNode= null;
+        while (!stack.isEmpty()){
+            curNode = stack.peek();
+            leftNode = curNode.getLchld();
+            if (leftNode != null  && curNode.getLchld() != lastPrintNode && curNode.getRchld() != lastPrintNode ){
+                stack.push(leftNode);
+                continue;
+            }
+            if (curNode.getRchld() != null && lastPrintNode == curNode.getLchld()){
+                stack.push(curNode.getRchld());
+                continue;
+            }
+
+//后序的打印叶子节点
+            if ((leftNode == null && curNode.getRchld() == null) || lastPrintNode == curNode.getRchld()){
+                System.out.print(curNode.getData()+",");
+                lastPrintNode = curNode;
+                stack.pop();
+                continue;
+            }
+
+        }
+    }
     //不使用额外空间
     public static void noRecursionPost2(BiTreeNode root){
         if(root == null){
@@ -227,7 +280,8 @@ public class TestTraverse {
 
     }
 
-    public static  int maxWidth2(BiTreeNode root){
+    public static  int maxWidth2(BiTreeNode root)
+    {
         if(root == null){
             return 0;
         }

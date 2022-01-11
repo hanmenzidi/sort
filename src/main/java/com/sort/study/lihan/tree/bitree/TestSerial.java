@@ -12,13 +12,15 @@ import java.util.Queue;
  * @DESCRIPTION: com.sort.study.lihan.tree.bitree
  * @version: 1.0
  */
+
 public class TestSerial {
     public static void main(String[] args) {
 
-        BiTreeNode root = Utils.serialGenrateBiTreeNode();
-        Queue<String> result = preSerial(root);
+        BiTreeNode root = Utils.serialGenrateBiTreeNode4Cell();
+        Queue<Character> result = cellSerial(root);
+        Queue<Character> result2 = zcCellSerial(root);
         System.out.println(result);
-        BiTreeNode newRoot = zcpreSerial(result);
+        System.out.println(result2);
         System.out.println("运行结束");
     }
 
@@ -104,4 +106,59 @@ public class TestSerial {
         root.setRchld(zcDoPreSerial(queue));
         return root;
     }
+
+    public static Queue<Character> cellSerial(BiTreeNode root){
+        Queue<BiTreeNode> queue = new LinkedList<>();
+        Queue<Character> result = new LinkedList<>();
+        if(root == null){
+            result.add(null);
+            return result;
+        }
+        queue.add(root);
+        doCellSerial(root,queue,result);
+        return result;
+    }
+
+    public static void doCellSerial(BiTreeNode root,Queue<BiTreeNode>queue, Queue<Character>result){
+        while (!queue.isEmpty()){
+            BiTreeNode curNode = queue.poll();
+            if(curNode==null){
+                result.add(null);
+                continue;
+            }
+            result.add(curNode.getData());
+
+
+            queue.add(curNode.getLchld());
+            queue.add(curNode.getRchld());
+        }
+    }
+
+    public static Queue<Character> zcCellSerial(BiTreeNode root){
+        Queue<Character> ans = new LinkedList<>();
+        if(root == null){
+            ans.add(null);
+            return ans;
+        }
+        ans.add(root.getData());
+        Queue<BiTreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()){
+            root = queue.poll();
+            if(root.getLchld() != null){
+                ans.add(root.getLchld().getData());
+                queue.add(root.getLchld());
+            }else{
+                ans.add(null);
+            }
+            if(root.getRchld() != null){
+                ans.add(root.getRchld().getData());
+                queue.add(root.getRchld());
+            }else {
+                ans.add(null);
+            }
+        }
+        return ans;
+    }
+
 }

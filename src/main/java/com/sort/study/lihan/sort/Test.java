@@ -8,7 +8,7 @@ public class Test {
     public static void main(String[] args) {
         int[] arr = Utils.generateArrr(20);
         int[] tempdArr = Arrays.copyOf(arr,arr.length);
-        Sort.heapSort(arr);
+        Sort.mergeSort2(arr);
         boolean flag = Utils.isArrOrdered(arr,tempdArr);
         System.out.println(flag);
     }

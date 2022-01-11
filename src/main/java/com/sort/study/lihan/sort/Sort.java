@@ -137,6 +137,61 @@ public class Sort {
     }
 
 
+    //归并非递归
+    public  static void mergeSort2(int[] arr){
+        if(arr == null || arr.length <2){
+            return;
+        }
+        int N = arr.length;
+//一组是2倍的mergeSize
+        int mergeSize = 1;
+        while (mergeSize < N){
+            int L = 0;
+            while (L < N){
+                int M = L + mergeSize -1;
+                if (M >=N){
+                    break;
+                }
+
+                int R = Math.min(mergeSize+M ,N-1);
+                merge(arr,L,M,R);
+                L = R +1;
+
+            }
+            if(mergeSize > N/2){
+                break;
+            }
+            mergeSize <<=1;
+        }
+    }
+
+    public static void merge(int[] arr,int left ,int mid,int right){
+        int[] tempArr = new int[right-left+1];
+        int leftIndex = left;
+        int rightIndex = mid + 1;
+        int curIndex = 0;
+        while (leftIndex <= mid && rightIndex<= right){
+            if(arr[rightIndex] < arr[leftIndex]){
+                tempArr[curIndex++] = arr[rightIndex];
+                rightIndex++;
+            }else{
+                tempArr[curIndex++] = arr[leftIndex];
+                leftIndex++;
+            }
+        }
+        while (leftIndex <= mid){
+            tempArr[curIndex++] = arr[leftIndex++];
+        }
+        while (rightIndex <= right){
+            tempArr[curIndex++] = arr[rightIndex++];
+        }
+        leftIndex = left;
+        for (int i = 0; i < tempArr.length; i++) {
+            arr[leftIndex++] = tempArr[i];
+        }
+
+    }
+
     //计数排序
     public static void  jishuSort(int[] arr){
         int[] base = new int[101];

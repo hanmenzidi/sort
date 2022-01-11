@@ -78,4 +78,32 @@ public class Utils {
 
         return  node1;
     }
+
+    public static BiTreeNode serialGenrateBiTreeNode4Cell(){
+        BiTreeNode node1 = new BiTreeNode();
+        BiTreeNode node2 = new BiTreeNode();
+        BiTreeNode node3 = new BiTreeNode();
+        BiTreeNode node4 = new BiTreeNode();
+        BiTreeNode node5 = new BiTreeNode();
+        BiTreeNode node6 = new BiTreeNode();
+        BiTreeNode node7 = new BiTreeNode();
+        BiTreeNode node8 = new BiTreeNode();
+        node1.setData('1');
+        node2.setData('2');
+        node3.setData('3');
+        node4.setData('4');
+        node5.setData('5');
+        node6.setData('6');
+        node7.setData('7');
+        node8.setData('8');
+        node1.setLchld(node2);
+        node1.setRchld(node3);
+        node2.setRchld(node4);
+        node3.setLchld(node5);
+        node3.setRchld(node6);
+        node5.setLchld(node7);
+        node5.setRchld(node8);
+
+        return  node1;
+    }
 }
