@@ -158,6 +158,7 @@ public class Sort {
                 L = R +1;
 
             }
+//如果不加也可以运行，加上后避免超过int的上限，因为成立的时候，下一次右移一定会超过N，如果此时mergeSize足够大的话，下一次移动可能会超过int上限
             if(mergeSize > N/2){
                 break;
             }
